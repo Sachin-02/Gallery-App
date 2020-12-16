@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../widgets/page_drawer.dart';
+import '../widgets/page_cover.dart';
 import '../providers/personal_pages.dart';
 
 class PageListScreen extends StatelessWidget {
@@ -10,6 +11,12 @@ class PageListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Choose your fighter!"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {},
+          ),
+        ],
       ),
       drawer: PageDrawer(),
       body: pages.isEmpty
@@ -21,9 +28,16 @@ class PageListScreen extends StatelessWidget {
             )
           : GridView.builder(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: MediaQuery.of(context).size.width,
+                maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
+                childAspectRatio: 1.0,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
               ),
-              itemBuilder: (ctx, i) => Container(),
+              itemBuilder: (ctx, i) => PageCover(
+                pages[i].id,
+                pages[i].name,
+                pages[i].image,
+              ),
               itemCount: pages.length,
             ),
     );
