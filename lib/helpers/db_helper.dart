@@ -20,7 +20,7 @@ class DBHelper {
       onCreate: (db, version) async {
         await db.execute('''CREATE TABLE IF NOT EXISTS pages(
               id TEXT PRIMARY KEY, 
-              title TEXT,
+              name TEXT,
               image TEXT
               )''');
         await db.execute('''CREATE TABLE IF NOT EXISTS images(
@@ -35,5 +35,15 @@ class DBHelper {
       },
       version: 1,
     );
+  }
+
+  Future<void> insert(String tableName, Map<String, Object> data) async {
+    final db = _database;
+    await db.insert(tableName, data);
+  }
+
+  Future<List<Map<String, dynamic>>> getAllData(String table) async {
+    final db = await database;
+    return db.query(table);
   }
 }
