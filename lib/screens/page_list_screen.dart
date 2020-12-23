@@ -38,7 +38,9 @@ class _PageListScreenState extends State<PageListScreen> {
         future: fetchAndSet,
         builder: (ctx, snapshot) => snapshot.connectionState ==
                 ConnectionState.waiting
-            ? Center()
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
             : Consumer<PersonalPages>(
                 child: Center(
                   child: Padding(
