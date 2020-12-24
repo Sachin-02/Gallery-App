@@ -26,53 +26,112 @@ class _PageListScreenState extends State<PageListScreen> {
       appBar: AppBar(
         title: Text("Choose your fighter!"),
         actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.of(context).pushNamed(AddPageScreen.routeName);
-            },
-          ),
+          PopupMenuButton(
+            itemBuilder: (ctx) => [
+              PopupMenuItem(
+                child: Text("Manage Pages"),
+              ),
+              PopupMenuItem(
+                child: Text("Settings"),
+              ),
+            ],
+          )
         ],
       ),
+      floatingActionButton: Container(
+        width: 70,
+        height: 70,
+        padding: EdgeInsets.only(bottom: 12),
+        child: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).pushNamed(AddPageScreen.routeName);
+          },
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       drawer: PageDrawer(),
       body: FutureBuilder(
         future: fetchAndSet,
-        builder: (ctx, snapshot) => snapshot.connectionState ==
-                ConnectionState.waiting
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Consumer<PersonalPages>(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text(
-                      "Welcome! You don't have any pages yet so tap the button in the top right to add a new page.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ),
-                builder: (ctx, pages, ch) => pages.items.isEmpty
-                    ? ch
-                    : GridView.builder(
-                        padding: EdgeInsets.all(10),
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent:
-                              MediaQuery.of(context).size.width * 0.5,
-                          childAspectRatio: 1.0,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Consumer<PersonalPages>(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          "Welcome! You don't have any pages yet so tap the button in the top right to add a new page.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 18),
                         ),
-                        itemBuilder: (ctx, i) => PageCover(
-                          pages.items[i].id,
-                          pages.items[i].name,
-                          pages.items[i].image,
-                        ),
-                        itemCount: pages.items.length,
                       ),
-              ),
+                    ),
+                    builder: (ctx, pages, ch) => pages.items.isEmpty
+                        ? ch
+                        : CustomScrollView(
+                            slivers: [
+                              SliverPadding(
+                                padding: EdgeInsets.all(12),
+                                sliver: SliverGrid(
+                                  gridDelegate:
+                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                    maxCrossAxisExtent:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    childAspectRatio: 1.0,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10,
+                                  ),
+                                  delegate: SliverChildBuilderDelegate(
+                                    (ctx, i) => PageCover(
+                                      pages.items[i].id,
+                                      pages.items[i].name,
+                                      pages.items[i].image,
+                                    ),
+                                    childCount: pages.items.length,
+                                  ),
+                                ),
+                              ),
+                              SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                    (ctx, i) => SizedBox(
+                                          height: 70,
+                                        ),
+                                    childCount: 1),
+                              )
+                            ],
+                          ),
+                  ),
       ),
     );
   }
 }
+
+//                            Column(
+//                             children: [
+//                               Expanded(
+//                                 child: GridView.builder(
+//                                   padding: EdgeInsets.all(10),
+//                                   gridDelegate:
+//     SliverGridDelegateWithMaxCrossAxisExtent(
+//   maxCrossAxisExtent:
+//       MediaQuery.of(context).size.width * 0.5,
+//   childAspectRatio: 1.0,
+//   crossAxisSpacing: 10,
+//   mainAxisSpacing: 10,
+// ),
+// itemBuilder: (ctx, i) => PageCover(
+//   pages.items[i].id,
+//   pages.items[i].name,
+//   pages.items[i].image,
+// ),
+// itemCount: pages.items.length,
+//                                 ),
+//                               ),
+//                               SizedBox(
+//                                 height: 70,
+//                               ),
+//                             ],
+//                           ),
