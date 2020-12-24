@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/personal_pages.dart';
+import '../screens/page_list_screen.dart';
 import '../screens/personal_page_screen.dart';
 import '../screens/add_page_screen.dart';
 
@@ -29,11 +30,13 @@ class PageDrawer extends StatelessWidget {
                           radius: 30,
                           child: IconButton(
                             icon: Icon(
-                              Icons.person,
+                              Icons.home,
                               size: 30,
                             ),
                             onPressed: () {
                               Navigator.of(context).pop();
+                              Navigator.of(context).pushReplacementNamed(
+                                  PageListScreen.routeName);
                             },
                           ),
                         ),

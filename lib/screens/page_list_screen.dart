@@ -6,6 +6,7 @@ import '../providers/personal_pages.dart';
 import '../screens/add_page_screen.dart';
 
 class PageListScreen extends StatefulWidget {
+  static const routeName = "/";
   @override
   _PageListScreenState createState() => _PageListScreenState();
 }
