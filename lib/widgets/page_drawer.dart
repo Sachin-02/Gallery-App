@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/personal_pages.dart';
+import '../screens/personal_page_screen.dart';
+import '../screens/add_page_screen.dart';
 
 class PageDrawer extends StatelessWidget {
   @override
@@ -54,9 +56,21 @@ class PageDrawer extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (ctx, i) => Container(
                   padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-                  child: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: FileImage(pages[i].image),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacementNamed(
+                        PersonalPageScreen.routeName,
+                        arguments: [
+                          pages[i].id,
+                          pages[i].name,
+                        ],
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: FileImage(pages[i].image),
+                    ),
                   ),
                 ),
                 childCount: pages.length,
@@ -72,7 +86,11 @@ class PageDrawer extends StatelessWidget {
                         Icons.add,
                         size: 30,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context)
+                            .pushNamed(AddPageScreen.routeName);
+                      },
                     ),
                     maxRadius: 30,
                   ),
