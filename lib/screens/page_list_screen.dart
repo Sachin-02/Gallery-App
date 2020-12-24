@@ -55,12 +55,13 @@ class _PageListScreenState extends State<PageListScreen> {
                 builder: (ctx, pages, ch) => pages.items.isEmpty
                     ? ch
                     : GridView.builder(
+                        padding: EdgeInsets.all(10),
                         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent:
                               MediaQuery.of(context).size.width * 0.5,
                           childAspectRatio: 1.0,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 5,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
                         ),
                         itemBuilder: (ctx, i) => PageCover(
                           pages.items[i].id,
