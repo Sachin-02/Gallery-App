@@ -6,6 +6,8 @@ import '../providers/personal_pages.dart';
 
 class AddPageScreen extends StatefulWidget {
   static const routeName = "/add-page";
+  final String pageId;
+  AddPageScreen({this.pageId});
   @override
   _AddPageScreenState createState() => _AddPageScreenState();
 }
@@ -13,6 +15,22 @@ class AddPageScreen extends StatefulWidget {
 class _AddPageScreenState extends State<AddPageScreen> {
   final _nameController = TextEditingController();
   File _pickedImage;
+  var _isInit = true;
+  var _isEditing = false;
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      _isInit = false;
+      if (widget.pageId != null) {
+        final page = Provider.of<PersonalPages>(context, listen: false)
+            .findById(widget.pageId);
+        _nameController.text = page.name;
+        _pickedImage = page.image;
+        _isEditing = true;
+      }
+    }
+    super.didChangeDependencies();
+  }
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
@@ -22,9 +40,15 @@ class _AddPageScreenState extends State<AddPageScreen> {
     if (_nameController.text.isEmpty || _pickedImage == null) {
       return;
     }
-    Provider.of<PersonalPages>(context, listen: false)
-        .addPage(_nameController.text, _pickedImage);
-    Navigator.of(context).pop();
+    if (_isEditing) {
+      Provider.of<PersonalPages>(context, listen: false)
+          .editPage(widget.pageId, _nameController.text, _pickedImage);
+      Navigator.of(context).pop();
+    } else {
+      Provider.of<PersonalPages>(context, listen: false)
+          .addPage(_nameController.text, _pickedImage);
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -41,7 +65,9 @@ class _AddPageScreenState extends State<AddPageScreen> {
               padding: EdgeInsets.all(10),
               child: Column(
                 children: [
-                  CoverImageInput(_selectImage),
+                  if (_pickedImage == null) CoverImageInput(_selectImage),
+                  if (_pickedImage != null)
+                    CoverImageInput(_selectImage, image: _pickedImage),
                   TextField(
                     autocorrect: false,
                     decoration: InputDecoration(labelText: "Title"),
@@ -54,7 +80,7 @@ class _AddPageScreenState extends State<AddPageScreen> {
           RaisedButton.icon(
             onPressed: _savePage,
             icon: Icon(Icons.add),
-            label: Text("Add page"),
+            label: _isEditing ? Text("Save page") : Text("Add page"),
             materialTapTargetSize:
                 MaterialTapTargetSize.shrinkWrap, // removes lower padding
             elevation: 0,

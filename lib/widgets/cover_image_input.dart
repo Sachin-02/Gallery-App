@@ -6,13 +6,22 @@ import 'package:path/path.dart' as path;
 
 class CoverImageInput extends StatefulWidget {
   final Function onSelectImage;
-  CoverImageInput(this.onSelectImage);
+  final File image;
+  CoverImageInput(this.onSelectImage, {this.image});
   @override
   _CoverImageInputState createState() => _CoverImageInputState();
 }
 
 class _CoverImageInputState extends State<CoverImageInput> {
   File _storedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.image != null) {
+      _storedImage = widget.image;
+    }
+  }
 
   void _startSelectImage() {
     showDialog(

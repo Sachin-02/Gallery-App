@@ -24,6 +24,10 @@ class PersonalPages with ChangeNotifier {
     notifyListeners();
   }
 
+  PersonalPage findById(String id) {
+    return _items.firstWhere((page) => page.id == id);
+  }
+
   void addPage(String name, File image) {
     final newPage = PersonalPage(
       id: DateTime.now().toString(),
@@ -32,10 +36,44 @@ class PersonalPages with ChangeNotifier {
     );
     _items.add(newPage);
     notifyListeners();
-    DBHelper.db.insert("pages", {
-      "id": newPage.id,
-      "name": newPage.name,
-      "image": newPage.image.path,
-    });
+    DBHelper.db.insert(
+      "pages",
+      {
+        "id": newPage.id,
+        "name": newPage.name,
+        "image": newPage.image.path,
+      },
+    );
+  }
+
+  void editPage(String id, String name, File image) {
+    final index = _items.indexWhere((page) => page.id == id);
+    _items[index].name = name;
+    _items[index].image = image;
+    notifyListeners();
+    DBHelper.db.update(
+      table: "pages",
+      columnId: "name",
+      setArg: name,
+      whereColumnId: "id",
+      whereArg: id,
+    );
+    DBHelper.db.update(
+      table: "pages",
+      columnId: "image",
+      setArg: image.path,
+      whereColumnId: "id",
+      whereArg: id,
+    );
+  }
+
+  void deletePage(String id) {
+    _items.removeWhere((page) => page.id == id);
+    notifyListeners();
+    DBHelper.db.delete(
+      table: "pages",
+      columnId: "id",
+      whereArg: id,
+    );
   }
 }

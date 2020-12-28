@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 
 class PersonalPage {
   final String id;
-  final String name;
-  final File image;
+  String name;
+  File image;
 
   PersonalPage({
     @required this.id,

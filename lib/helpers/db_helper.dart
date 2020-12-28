@@ -46,4 +46,21 @@ class DBHelper {
     final db = await database;
     return db.query(table);
   }
+
+  Future<void> update(
+      {String table,
+      String columnId,
+      String whereColumnId,
+      String setArg,
+      String whereArg}) async {
+    final db = await database;
+    await db.rawUpdate(
+        "UPDATE $table SET $columnId = ? WHERE $whereColumnId = ?",
+        [setArg, whereArg]);
+  }
+
+  Future<void> delete({String table, String columnId, String whereArg}) async {
+    final db = await database;
+    await db.delete(table, where: "$columnId = ?", whereArgs: [whereArg]);
+  }
 }
