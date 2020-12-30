@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './helpers/route_generator.dart';
 import './providers/personal_pages.dart';
+import './providers/personal_images.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => PersonalPages(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => PersonalImages(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -42,6 +42,16 @@ class DBHelper {
     await db.insert(tableName, data);
   }
 
+  Future<List<Map<String, dynamic>>> getData(
+      {String table, String columnId, String arg}) async {
+    final db = await database;
+    return db.query(
+      table,
+      where: "$columnId = ?",
+      whereArgs: [arg],
+    );
+  }
+
   Future<List<Map<String, dynamic>>> getAllData(String table) async {
     final db = await database;
     return db.query(table);

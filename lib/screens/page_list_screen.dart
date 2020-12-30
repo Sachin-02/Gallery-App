@@ -18,9 +18,9 @@ class _PageListScreenState extends State<PageListScreen> {
   Future fetchAndSet;
   @override
   void initState() {
+    super.initState();
     fetchAndSet =
         Provider.of<PersonalPages>(context, listen: false).fetchAndSetPages();
-    super.initState();
   }
 
   void menuAction(MenuAction action) {
@@ -85,7 +85,7 @@ class _PageListScreenState extends State<PageListScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(12),
                     child: Text(
-                      "Welcome! You don't have any pages yet so tap the button in the top right to add a new page.",
+                      "Welcome! You don't have any pages yet.  Tap the + button in the top right to add a new page.",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18),
                     ),
