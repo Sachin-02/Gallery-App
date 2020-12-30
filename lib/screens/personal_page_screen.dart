@@ -18,19 +18,28 @@ class PersonalPageScreen extends StatefulWidget {
   _PersonalPageScreenState createState() => _PersonalPageScreenState();
 }
 
-class _PersonalPageScreenState extends State<PersonalPageScreen> {
+class _PersonalPageScreenState extends State<PersonalPageScreen>
+    with SingleTickerProviderStateMixin {
   Future fetchAndSet;
+  AnimationController _iconAnimation;
   var _gridView = false;
 
   @override
   void initState() {
     super.initState();
+    _iconAnimation =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
     fetchAndSet = Provider.of<PersonalImages>(context, listen: false)
         .fetchAndSetImages(widget.pageId);
   }
 
   void _changeView() {
     setState(() {
+      if (_gridView) {
+        _iconAnimation.forward();
+      } else {
+        _iconAnimation.reverse();
+      }
       _gridView = !_gridView;
     });
   }
@@ -174,8 +183,11 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
         title: Text("${widget.pageName}"),
         actions: [
           IconButton(
-            icon: _gridView ? Icon(Icons.list) : Icon(Icons.grid_on),
             onPressed: _changeView,
+            icon: AnimatedIcon(
+              icon: AnimatedIcons.list_view,
+              progress: _iconAnimation,
+            ),
           ),
           IconButton(
             icon: Icon(Icons.add),
