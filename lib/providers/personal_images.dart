@@ -10,6 +10,10 @@ class PersonalImages with ChangeNotifier {
     return [..._items];
   }
 
+  int getIndex(String id) {
+    return _items.indexWhere((image) => image.id == id);
+  }
+
   Future<void> fetchAndSetImages(String pageId) async {
     final data = await DBHelper.db.getData(
       table: "images",

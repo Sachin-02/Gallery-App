@@ -3,6 +3,7 @@ import '../screens/page_list_screen.dart';
 import '../screens/add_page_screen.dart';
 import '../screens/personal_page_screen.dart';
 import '../screens/manage_pages_screen.dart';
+import '../screens/image_view_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -21,6 +22,8 @@ class RouteGenerator {
         );
       case ManagePagesScreen.routeName:
         return MaterialPageRoute(builder: (_) => ManagePagesScreen());
+      case ImageViewScreen.routeName:
+        return MaterialPageRoute(builder: (_) => ImageViewScreen(args));
       default:
         return _errorRoute();
     }

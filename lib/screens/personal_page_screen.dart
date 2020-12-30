@@ -6,6 +6,7 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 import '../providers/personal_images.dart';
 import '../widgets/page_drawer.dart';
+import '../screens/image_view_screen.dart';
 
 class PersonalPageScreen extends StatefulWidget {
   static const routeName = "/personal-page";
@@ -113,10 +114,18 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
               crossAxisSpacing: 1,
             ),
             delegate: SliverChildBuilderDelegate(
-                (ctx, i) => Container(
-                      child: Image.file(
-                        images.items[i].image,
-                        fit: BoxFit.cover,
+                (ctx, i) => InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                            ImageViewScreen.routeName,
+                            arguments: images.items[i].id);
+                      },
+                      child: Hero(
+                        tag: images.items[i].id,
+                        child: Image.file(
+                          images.items[i].image,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                 childCount: images.items.length),
@@ -132,11 +141,20 @@ class _PersonalPageScreenState extends State<PersonalPageScreen> {
               (ctx, i) => Card(
                 margin: EdgeInsets.only(bottom: 8, top: 4, left: 4, right: 4),
                 elevation: 8,
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  child: Image.file(
-                    images.items[i].image,
-                    fit: BoxFit.fitWidth,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(ImageViewScreen.routeName,
+                        arguments: images.items[i].id);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    child: Hero(
+                      tag: images.items[i].id,
+                      child: Image.file(
+                        images.items[i].image,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
                   ),
                 ),
               ),
