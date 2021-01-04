@@ -16,14 +16,19 @@ class RouteGenerator {
       case PersonalPageScreen.routeName:
         return MaterialPageRoute(
           builder: (_) {
-            final List<String> argument = args;
-            return PersonalPageScreen(argument[0], argument[1]);
+            final List<String> arguments = args;
+            return PersonalPageScreen(arguments[0], arguments[1]);
           },
         );
       case ManagePagesScreen.routeName:
         return MaterialPageRoute(builder: (_) => ManagePagesScreen());
       case ImageViewScreen.routeName:
-        return MaterialPageRoute(builder: (_) => ImageViewScreen(args));
+        return MaterialPageRoute(
+          builder: (_) {
+            final List<String> arguments = args;
+            return ImageViewScreen(arguments[0], arguments[1]);
+          },
+        );
       default:
         return _errorRoute();
     }

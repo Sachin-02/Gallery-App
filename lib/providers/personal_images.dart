@@ -47,4 +47,10 @@ class PersonalImages with ChangeNotifier {
       },
     );
   }
+
+  void deleteImage(String id) {
+    _items.removeWhere((image) => image.id == id);
+    notifyListeners();
+    DBHelper.db.delete(table: "images", columnId: "id", whereArg: id);
+  }
 }

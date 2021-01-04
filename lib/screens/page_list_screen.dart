@@ -132,30 +132,3 @@ class _PageListScreenState extends State<PageListScreen> {
     );
   }
 }
-
-//                            Column(
-//                             children: [
-//                               Expanded(
-//                                 child: GridView.builder(
-//                                   padding: EdgeInsets.all(10),
-//                                   gridDelegate:
-//     SliverGridDelegateWithMaxCrossAxisExtent(
-//   maxCrossAxisExtent:
-//       MediaQuery.of(context).size.width * 0.5,
-//   childAspectRatio: 1.0,
-//   crossAxisSpacing: 10,
-//   mainAxisSpacing: 10,
-// ),
-// itemBuilder: (ctx, i) => PageCover(
-//   pages.items[i].id,
-//   pages.items[i].name,
-//   pages.items[i].image,
-// ),
-// itemCount: pages.items.length,
-//                                 ),
-//                               ),
-//                               SizedBox(
-//                                 height: 70,
-//                               ),
-//                             ],
-//                           ),

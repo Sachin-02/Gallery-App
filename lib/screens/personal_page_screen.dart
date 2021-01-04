@@ -22,7 +22,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
     with SingleTickerProviderStateMixin {
   Future fetchAndSet;
   AnimationController _iconAnimation;
-  var _gridView = false;
+  var _gridView = true;
 
   @override
   void initState() {
@@ -111,6 +111,29 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
         .addImage(widget.pageId, savedImage);
   }
 
+  void _startDeleteImage(String id) {
+    showDialog(
+        context: context,
+        child: SimpleDialog(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Provider.of<PersonalImages>(context, listen: false)
+                        .deleteImage(id);
+                  },
+                ),
+                Text("Delete"),
+              ],
+            )
+          ],
+        ));
+  }
+
   Widget _imageViewBuilder(PersonalImages images) {
     if (_gridView) {
       return Scrollbar(
@@ -127,7 +150,10 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
                       onTap: () {
                         Navigator.of(context).pushNamed(
                             ImageViewScreen.routeName,
-                            arguments: images.items[i].id);
+                            arguments: [images.items[i].id, widget.pageName]);
+                      },
+                      onLongPress: () {
+                        _startDeleteImage(images.items[i].id);
                       },
                       child: Hero(
                         tag: images.items[i].id,
@@ -151,9 +177,12 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
                 margin: EdgeInsets.only(bottom: 8, top: 4, left: 4, right: 4),
                 elevation: 8,
                 child: InkWell(
+                  onLongPress: () {
+                    _startDeleteImage(images.items[i].id);
+                  },
                   onTap: () {
                     Navigator.of(context).pushNamed(ImageViewScreen.routeName,
-                        arguments: images.items[i].id);
+                        arguments: [images.items[i].id, widget.pageName]);
                   },
                   child: Container(
                     padding: EdgeInsets.all(8),
