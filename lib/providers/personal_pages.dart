@@ -70,10 +70,7 @@ class PersonalPages with ChangeNotifier {
   void deletePage(String id) {
     _items.removeWhere((page) => page.id == id);
     notifyListeners();
-    DBHelper.db.delete(
-      table: "pages",
-      columnId: "id",
-      whereArg: id,
-    );
+    DBHelper.db.delete(table: "images", columnId: "pageId", whereArg: id);
+    DBHelper.db.delete(table: "pages", columnId: "id", whereArg: id);
   }
 }
