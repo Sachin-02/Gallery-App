@@ -55,15 +55,9 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
               InkWell(
                 child: Column(
                   children: [
-                    Icon(
-                      Icons.camera,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    Icon(Icons.camera),
                     SizedBox(height: 10),
-                    Text(
-                      "Camera",
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
+                    Text("Camera"),
                   ],
                 ),
                 onTap: () {
@@ -74,15 +68,9 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
               InkWell(
                 child: Column(
                   children: [
-                    Icon(
-                      Icons.image,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    Icon(Icons.image),
                     SizedBox(height: 10),
-                    Text(
-                      "Gallery",
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
+                    Text("Gallery"),
                   ],
                 ),
                 onTap: () {
@@ -174,7 +162,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
             SliverList(
                 delegate: SliverChildBuilderDelegate(
               (ctx, i) => Card(
-                margin: EdgeInsets.only(bottom: 8, top: 4, left: 4, right: 4),
+                margin: EdgeInsets.only(bottom: 10, top: 6, left: 6, right: 6),
                 elevation: 8,
                 child: InkWell(
                   onLongPress: () {
@@ -185,7 +173,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
                         arguments: [images.items[i].id, widget.pageName]);
                   },
                   child: Container(
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(6),
                     child: Hero(
                       tag: images.items[i].id,
                       child: Image.file(

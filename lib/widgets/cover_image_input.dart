@@ -34,15 +34,9 @@ class _CoverImageInputState extends State<CoverImageInput> {
               InkWell(
                 child: Column(
                   children: [
-                    Icon(
-                      Icons.camera,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    Icon(Icons.camera),
                     SizedBox(height: 10),
-                    Text(
-                      "Camera",
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
+                    Text("Camera"),
                   ],
                 ),
                 onTap: () {
@@ -53,15 +47,9 @@ class _CoverImageInputState extends State<CoverImageInput> {
               InkWell(
                 child: Column(
                   children: [
-                    Icon(
-                      Icons.image,
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    Icon(Icons.image),
                     SizedBox(height: 10),
-                    Text(
-                      "Gallery",
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
+                    Text("Gallery"),
                   ],
                 ),
                 onTap: () {
@@ -101,6 +89,7 @@ class _CoverImageInputState extends State<CoverImageInput> {
             top: 20,
           ),
           child: CircleAvatar(
+            backgroundColor: Theme.of(context).primaryColor,
             radius: 50,
             backgroundImage:
                 _storedImage != null ? FileImage(_storedImage) : null,
@@ -109,6 +98,7 @@ class _CoverImageInputState extends State<CoverImageInput> {
                 : Icon(
                     Icons.person,
                     size: 60,
+                    color: Colors.white,
                   ),
           ),
         ),

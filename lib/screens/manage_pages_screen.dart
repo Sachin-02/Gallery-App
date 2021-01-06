@@ -8,7 +8,10 @@ class ManagePagesScreen extends StatelessWidget {
     showDialog(
       context: ctx,
       child: AlertDialog(
-        title: Text("Delete $title?"),
+        title: Text(
+          "Delete $title?",
+          style: TextStyle(color: Theme.of(ctx).textTheme.headline5.color),
+        ),
         content: Text(
             "Warning: deleting a page will delete any images inside of it. Are you sure you want to delete this page?"),
         actions: [
@@ -16,14 +19,20 @@ class ManagePagesScreen extends StatelessWidget {
             onPressed: () {
               Navigator.of(ctx).pop();
             },
-            child: Text("Cancel"),
+            child: Text(
+              "Cancel",
+              style: Theme.of(ctx).textTheme.button,
+            ),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(ctx).pop();
               Provider.of<PersonalPages>(ctx, listen: false).deletePage(id);
             },
-            child: Text("Delete"),
+            child: Text(
+              "Delete",
+              style: Theme.of(ctx).textTheme.button,
+            ),
           ),
         ],
       ),
@@ -35,7 +44,8 @@ class ManagePagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Manage Pages"),
+        title:
+            Text("Manage Pages", style: Theme.of(context).textTheme.headline6),
       ),
       body: Consumer<PersonalPages>(
         child: Center(child: Text("You have no pages.")),
@@ -59,7 +69,10 @@ class ManagePagesScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           IconButton(
-                            icon: Icon(Icons.edit),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Theme.of(context).iconTheme.color,
+                            ),
                             onPressed: () {
                               Navigator.of(context).pushNamed(
                                   AddPageScreen.routeName,
@@ -67,7 +80,10 @@ class ManagePagesScreen extends StatelessWidget {
                             },
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete),
+                            icon: Icon(
+                              Icons.delete,
+                              color: Theme.of(context).iconTheme.color,
+                            ),
                             onPressed: () {
                               showDeleteDialog(
                                 context,

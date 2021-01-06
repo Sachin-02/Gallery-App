@@ -78,9 +78,18 @@ class _AddPageScreenState extends State<AddPageScreen> {
             ),
           ),
           RaisedButton.icon(
+            color: Theme.of(context).primaryColor,
             onPressed: _savePage,
-            icon: Icon(Icons.add),
-            label: _isEditing ? Text("Save page") : Text("Add page"),
+            icon: Icon(Icons.add, color: Colors.white),
+            label: _isEditing
+                ? Text(
+                    "Save page",
+                    style: TextStyle(color: Colors.white),
+                  )
+                : Text(
+                    "Add page",
+                    style: TextStyle(color: Colors.white),
+                  ),
             materialTapTargetSize:
                 MaterialTapTargetSize.shrinkWrap, // removes lower padding
             elevation: 0,

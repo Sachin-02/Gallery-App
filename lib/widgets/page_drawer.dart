@@ -27,11 +27,13 @@ class PageDrawer extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.center,
                         child: CircleAvatar(
+                          backgroundColor: Theme.of(context).primaryColor,
                           radius: 30,
                           child: IconButton(
+                            color: Colors.white,
                             icon: Icon(
                               Icons.home,
-                              size: 30,
+                              size: 25,
                             ),
                             onPressed: () {
                               Navigator.of(context).pop();
@@ -46,7 +48,7 @@ class PageDrawer extends StatelessWidget {
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       padding: EdgeInsets.only(bottom: 2),
                       child: Divider(
-                        color: Colors.black,
+                        color: Theme.of(context).dividerColor,
                         thickness: 0.5,
                       ),
                     ),
@@ -84,10 +86,11 @@ class PageDrawer extends StatelessWidget {
                 (ctx, i) => Container(
                   padding: EdgeInsets.only(left: 5, right: 5, bottom: 5),
                   child: CircleAvatar(
+                    backgroundColor: Theme.of(context).primaryColor,
                     child: IconButton(
+                      color: Colors.white,
                       icon: Icon(
                         Icons.add,
-                        size: 30,
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();

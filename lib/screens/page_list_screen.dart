@@ -5,6 +5,7 @@ import '../widgets/page_cover.dart';
 import '../providers/personal_pages.dart';
 import '../screens/add_page_screen.dart';
 import '../screens/manage_pages_screen.dart';
+import '../screens/settings_screen.dart';
 
 enum MenuAction { managePages, settings }
 
@@ -31,7 +32,9 @@ class _PageListScreenState extends State<PageListScreen> {
         }
         break;
       case MenuAction.settings:
-        {}
+        {
+          Navigator.of(context).pushNamed(SettingsScreen.routeName);
+        }
         break;
       default:
         {}
@@ -43,9 +46,13 @@ class _PageListScreenState extends State<PageListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Choose your fighter!"),
+        title: Text(
+          "Choose your fighter!",
+          style: Theme.of(context).textTheme.headline6,
+        ),
         actions: [
           PopupMenuButton<MenuAction>(
+            color: Theme.of(context).popupMenuTheme.color,
             onSelected: menuAction,
             itemBuilder: (ctx) => [
               PopupMenuItem(
@@ -65,7 +72,7 @@ class _PageListScreenState extends State<PageListScreen> {
         height: 70,
         padding: EdgeInsets.only(bottom: 12),
         child: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: Icon(Icons.add, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pushNamed(AddPageScreen.routeName);
           },
