@@ -4,7 +4,7 @@ import './helpers/route_generator.dart';
 import './providers/personal_pages.dart';
 import './providers/personal_images.dart';
 import './providers/theme_manager.dart';
-import './widgets/theme_manager_widget.dart';
+import 'helpers/theme_manager_widget.dart';
 
 void main() {
   runApp(MyApp());

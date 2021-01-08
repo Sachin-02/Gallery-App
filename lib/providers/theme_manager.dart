@@ -63,7 +63,6 @@ class ThemeManager with ChangeNotifier {
   }
 
   Future<void> fetchAndSetMode() async {
-    print("fetching mode");
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey("darkMode")) {
       await prefs.setBool("darkMode", false);
@@ -75,8 +74,10 @@ class ThemeManager with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeMode(bool val) {
+  void changeMode(bool val) async {
     _isDarkMode = val;
     notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("darkMode", val);
   }
 }
