@@ -20,16 +20,18 @@ class ImageView extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        GestureDetector(
-          onTap: changeView,
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(0),
-            child: Hero(
-              tag: id,
-              child: Image.file(
-                image,
-                fit: BoxFit.fitWidth,
+        InteractiveViewer(
+          child: GestureDetector(
+            onTap: changeView,
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(0),
+              child: Hero(
+                tag: id,
+                child: Image.file(
+                  image,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
           ),

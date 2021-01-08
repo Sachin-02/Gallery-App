@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart' as syspaths;
 import 'package:path/path.dart' as path;
+import 'package:image_cropper/image_cropper.dart';
 
 class CoverImageInput extends StatefulWidget {
   final Function onSelectImage;
@@ -66,15 +67,32 @@ class _CoverImageInputState extends State<CoverImageInput> {
 
   void _selectImage(ImageSource source) async {
     final picker = ImagePicker();
-    final imageFile = await picker.getImage(source: source, maxWidth: 100);
+    final imageFile = await picker.getImage(source: source);
     if (imageFile == null) {
       return;
     }
+    final croppedImage = await ImageCropper.cropImage(
+      sourcePath: imageFile.path,
+      aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 100,
+      maxHeight: 400,
+      maxWidth: 400,
+      androidUiSettings: AndroidUiSettings(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        toolbarColor: Theme.of(context).primaryColor,
+        toolbarWidgetColor: Theme.of(context).textTheme.headline6.color,
+        activeControlsWidgetColor: Theme.of(context).primaryColor,
+      ),
+    );
+    if (croppedImage == null) {
+      return;
+    }
     setState(() {
-      _storedImage = File(imageFile.path);
+      _storedImage = croppedImage;
     });
     final appDir = await syspaths.getApplicationDocumentsDirectory();
-    final fileName = path.basename(imageFile.path);
+    final fileName = path.basename(_storedImage.path);
     final savedImage = await _storedImage.copy("${appDir.path}/$fileName");
     widget.onSelectImage(savedImage);
   }
@@ -84,22 +102,39 @@ class _CoverImageInputState extends State<CoverImageInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          padding: EdgeInsets.only(
-            top: 20,
-          ),
-          child: CircleAvatar(
-            backgroundColor: Theme.of(context).primaryColor,
-            radius: 50,
-            backgroundImage:
-                _storedImage != null ? FileImage(_storedImage) : null,
-            child: _storedImage != null
-                ? null
-                : Icon(
-                    Icons.person,
-                    size: 60,
-                    color: Colors.white,
+        SizedBox(
+          height: 20,
+        ),
+        ClipRRect(
+          child: Container(
+            height: 200,
+            width: 200,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                _storedImage != null
+                    ? Image.file(
+                        _storedImage,
+                        fit: BoxFit.cover,
+                      )
+                    : Container(
+                        width: 200,
+                        height: 200,
+                        color: Theme.of(context).primaryColor,
+                        child: Icon(
+                          Icons.person,
+                          size: 70,
+                          color: Colors.white,
+                        ),
+                      ),
+                ClipPath(
+                  clipper: InvertedCircleClipper(),
+                  child: Container(
+                    color: Color.fromRGBO(0, 0, 0, 0.5),
                   ),
+                ),
+              ],
+            ),
           ),
         ),
         FlatButton.icon(
@@ -116,4 +151,19 @@ class _CoverImageInputState extends State<CoverImageInput> {
       ],
     );
   }
+}
+
+class InvertedCircleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    return Path()
+      ..addOval(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.5))
+      ..addRect(Rect.fromLTWH(0.0, 0.0, size.width, size.height))
+      ..fillType = PathFillType.evenOdd;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

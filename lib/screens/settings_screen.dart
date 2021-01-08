@@ -6,7 +6,7 @@ class SettingsScreen extends StatelessWidget {
   static const routeName = "/settings";
   @override
   Widget build(BuildContext context) {
-    var isDarkMode = Provider.of<ThemeManager>(context).isDarkMode;
+    // var isDarkMode = Provider.of<ThemeManager>(context).isDarkMode;
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings"),
@@ -22,8 +22,8 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           trailing: Switch(
-              value: isDarkMode,
-              // value: false,
+              // value: isDarkMode,
+              value: false,
               onChanged: (val) {
                 Provider.of<ThemeManager>(context, listen: false)
                     .changeMode(val);

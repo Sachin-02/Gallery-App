@@ -45,6 +45,7 @@ class ThemeManager with ChangeNotifier {
     ),
     dividerColor: Colors.white,
   );
+
   ThemeData get theme {
     if (_isDarkMode) {
       return _darkTheme;

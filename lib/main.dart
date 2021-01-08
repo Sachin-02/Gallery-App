@@ -3,7 +3,8 @@ import 'package:provider/provider.dart';
 import './helpers/route_generator.dart';
 import './providers/personal_pages.dart';
 import './providers/personal_images.dart';
-import 'providers/theme_manager.dart';
+import './providers/theme_manager.dart';
+import './widgets/theme_manager_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,22 +24,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ThemeManager(),
           builder: (context, _) {
-            return FutureBuilder(
-              future: Provider.of<ThemeManager>(context, listen: false)
-                  .fetchAndSetMode(),
-              builder: (ctx, snapshot) =>
-                  snapshot.connectionState == ConnectionState.waiting
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Consumer<ThemeManager>(
-                          builder: (ctx, themeManager, ch) => MaterialApp(
-                            debugShowCheckedModeBanner: false,
-                            title: 'Flutter Demo',
-                            theme: themeManager.theme,
-                            onGenerateRoute: RouteGenerator.generateRoute,
-                          ),
-                        ),
+            return ThemeManagerWidget(
+              child: Consumer<ThemeManager>(
+                builder: (ctx, themeManager, ch) => MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Flutter Demo',
+                  theme: themeManager.theme,
+                  onGenerateRoute: RouteGenerator.generateRoute,
+                ),
+              ),
             );
           },
         ),
@@ -46,36 +40,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-//         ChangeNotifierProvider(
-//           create: (_) => ThemeManager(),
-//         ),
-//       ],
-//       child: MaterialApp(
-//         debugShowCheckedModeBanner: false,
-//         title: 'Flutter Demo',
-//         theme: ThemeData(
-//           primaryColor: const Color(0xFF3b70b3),
-//           scaffoldBackgroundColor: const Color(0xFFa4c8f5),
-//           canvasColor: const Color(0xFFa4c8f5),
-//           floatingActionButtonTheme: FloatingActionButtonThemeData(
-//             backgroundColor: const Color(0xFF3b70b3),
-//           ),
-//           appBarTheme: AppBarTheme(
-//             color: const Color(0xFF3b70b3),
-//             centerTitle: true,
-//           ),
-//           textTheme: TextTheme(
-//             headline6: TextStyle(color: Colors.white),
-//             headline5: TextStyle(color: Colors.black),
-//           ),
-//           iconTheme: IconThemeData(
-//             color: Colors.black87,
-//           ),
-//           dividerColor: Colors.black,
-//         ),
-//         onGenerateRoute: RouteGenerator.generateRoute,
-//       ),
-//     );
-//   }
-// }
