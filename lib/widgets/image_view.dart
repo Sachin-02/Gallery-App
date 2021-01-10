@@ -20,6 +20,7 @@ class ImageView extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
+        // interactive viewer allows for zooming
         InteractiveViewer(
           child: GestureDetector(
             onTap: changeView,
@@ -36,6 +37,8 @@ class ImageView extends StatelessWidget {
             ),
           ),
         ),
+        // back button that shows between taps. Similar function to
+        // standard android gallery app.
         if (!imageOnly)
           Positioned(
             height: 50,

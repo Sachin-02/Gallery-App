@@ -14,6 +14,8 @@ class PersonalImages with ChangeNotifier {
     return _items.indexWhere((image) => image.id == id);
   }
 
+  // accessing the db to get list of personal images based on the page
+  // the user is viewing
   Future<void> fetchAndSetImages(String pageId) async {
     final data = await DBHelper.db.getData(
       table: "images",

@@ -21,6 +21,7 @@ class PageDrawer extends StatelessWidget {
                     SizedBox(
                       height: MediaQuery.of(context).padding.top + 2,
                     ),
+                    // home button in the drawer
                     Container(
                       height: 70,
                       width: 70,
@@ -44,6 +45,7 @@ class PageDrawer extends StatelessWidget {
                         ),
                       ),
                     ),
+                    // divider
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       padding: EdgeInsets.only(bottom: 2),
@@ -57,6 +59,7 @@ class PageDrawer extends StatelessWidget {
                 childCount: 1,
               ),
             ),
+            // pages
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (ctx, i) => Container(
@@ -81,6 +84,7 @@ class PageDrawer extends StatelessWidget {
                 childCount: pages.length,
               ),
             ),
+            // add page button
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (ctx, i) => Container(

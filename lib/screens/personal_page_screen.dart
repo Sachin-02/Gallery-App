@@ -29,10 +29,14 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
     super.initState();
     _iconAnimation =
         AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    // Intializing the future inside init state to prevent any unnecessary
+    // reruns of the future when opening and closing the drawer. This can
+    // happen when using the future builder without init state.
     fetchAndSet = Provider.of<PersonalImages>(context, listen: false)
         .fetchAndSetImages(widget.pageId);
   }
 
+  // switch between grid and list view
   void _changeView() {
     setState(() {
       if (_gridView) {
@@ -44,6 +48,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
     });
   }
 
+  // show dialog for camera or gallery image select options
   void _startSelectImage() {
     showDialog(
       context: context,
@@ -86,11 +91,14 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
   }
 
   void _selectImage(ImageSource source) async {
+    // creates and opens image picker
     final picker = ImagePicker();
     final pickedImageFile = await picker.getImage(source: source);
+    // check if no image was chosen
     if (pickedImageFile == null) {
       return;
     }
+    // getting and creating a path for the image so I can save it to the device
     final imageFile = File(pickedImageFile.path);
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final fileName = path.basename(imageFile.path);
@@ -99,6 +107,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
         .addImage(widget.pageId, savedImage);
   }
 
+  // dialog to show delete button
   void _startDeleteImage(String id) {
     showDialog(
         context: context,
@@ -122,6 +131,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
         ));
   }
 
+  // returns list or gridview depending on the boolean
   Widget _imageViewBuilder(PersonalImages images) {
     if (_gridView) {
       return Scrollbar(
@@ -129,6 +139,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
           SliverGrid(
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               childAspectRatio: 1.0,
+              // grid will have 3 columns
               maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.4,
               mainAxisSpacing: 1,
               crossAxisSpacing: 1,
@@ -213,6 +224,7 @@ class _PersonalPageScreenState extends State<PersonalPageScreen>
         ],
       ),
       body: FutureBuilder(
+        future: fetchAndSet,
         builder: (ctx, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
                 ? const Center(

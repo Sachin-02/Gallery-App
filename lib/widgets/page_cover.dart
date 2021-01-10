@@ -11,6 +11,7 @@ class PageCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // Using a ClipRRect for the rounded corners
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: Material(

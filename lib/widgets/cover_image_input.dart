@@ -66,11 +66,14 @@ class _CoverImageInputState extends State<CoverImageInput> {
   }
 
   void _selectImage(ImageSource source) async {
+    // creating and opening image picker
     final picker = ImagePicker();
     final imageFile = await picker.getImage(source: source);
+    // check in case no image is chosen
     if (imageFile == null) {
       return;
     }
+    // creating and opening cropper
     final croppedImage = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
       aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
@@ -85,12 +88,14 @@ class _CoverImageInputState extends State<CoverImageInput> {
         activeControlsWidgetColor: Theme.of(context).primaryColor,
       ),
     );
+    // check for if cropper is exited without saving the image
     if (croppedImage == null) {
       return;
     }
     setState(() {
       _storedImage = croppedImage;
     });
+    // getting and creating a path for the image so I can save it to the device
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final fileName = path.basename(_storedImage.path);
     final savedImage = await _storedImage.copy("${appDir.path}/$fileName");
@@ -112,6 +117,7 @@ class _CoverImageInputState extends State<CoverImageInput> {
             child: Stack(
               alignment: Alignment.center,
               children: [
+                // show icon or show image
                 _storedImage != null
                     ? Image.file(
                         _storedImage,
@@ -127,6 +133,7 @@ class _CoverImageInputState extends State<CoverImageInput> {
                           color: Colors.white,
                         ),
                       ),
+                // this widget creates the inverted dimmed circle on top of image
                 ClipPath(
                   clipper: InvertedCircleClipper(),
                   child: Container(
@@ -153,6 +160,9 @@ class _CoverImageInputState extends State<CoverImageInput> {
   }
 }
 
+// found this code from an custom image cropper showcase by
+// "Going Walkabout" on YouTube. Full credit to them, link to their
+// code is here: https://github.com/aadjemonkeyrock/profile_image_cropper.
 class InvertedCircleClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

@@ -10,6 +10,7 @@ class PersonalPages with ChangeNotifier {
     return [..._items];
   }
 
+  // accessing the db on startup of the app to get the existing pages
   Future<void> fetchAndSetPages() async {
     final data = await DBHelper.db.getAllData("pages");
     _items = data
@@ -70,6 +71,8 @@ class PersonalPages with ChangeNotifier {
   void deletePage(String id) {
     _items.removeWhere((page) => page.id == id);
     notifyListeners();
+    // deleting all images under the page before deleting the page to
+    // meet the foreign key constraint
     DBHelper.db.delete(table: "images", columnId: "pageId", whereArg: id);
     DBHelper.db.delete(table: "pages", columnId: "id", whereArg: id);
   }

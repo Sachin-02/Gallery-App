@@ -17,8 +17,11 @@ class _AddPageScreenState extends State<AddPageScreen> {
   File _pickedImage;
   var _isInit = true;
   var _isEditing = false;
+
   @override
   void didChangeDependencies() {
+    // checking if arguments were passed in to determine if editing
+    // a page or adding a new one
     if (_isInit) {
       _isInit = false;
       if (widget.pageId != null) {
@@ -32,11 +35,14 @@ class _AddPageScreenState extends State<AddPageScreen> {
     super.didChangeDependencies();
   }
 
+  // function to pass into the cover image input widget to
+  // allow the image from cover image input to be used here
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
   void _savePage() {
+    // making sure the page has a title
     if (_nameController.text.isEmpty || _pickedImage == null) {
       return;
     }

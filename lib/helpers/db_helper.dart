@@ -2,11 +2,14 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite/sqlite_api.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
+// static helper class for accessing the sqlite database
+
 class DBHelper {
   DBHelper._();
   static final DBHelper db = DBHelper._();
   static Database _database;
 
+  // making sure there is only one instance of the db active
   Future<Database> get database async {
     if (_database != null) return _database;
     _database = await initDB();
@@ -31,6 +34,7 @@ class DBHelper {
               )''');
       },
       onConfigure: (db) {
+        // enables foreign key relationship usage
         db.execute("PRAGMA foreign_keys = ON");
       },
       version: 1,

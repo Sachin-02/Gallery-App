@@ -62,7 +62,10 @@ class ThemeManager with ChangeNotifier {
     }
   }
 
+  // setting the theme on startup of the app
   Future<void> fetchAndSetMode() async {
+    // accessing the device storage to check if dark mode preferences
+    // have been set. If it has not been set, setting it to false (light mode)
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey("darkMode")) {
       await prefs.setBool("darkMode", false);

@@ -14,6 +14,8 @@ class ImageViewScreen extends StatefulWidget {
 }
 
 class _ImageViewScreenState extends State<ImageViewScreen> {
+  // boolean to display back button bar or not. This is managed in this widget
+  // as opposed to the image_view widget so that it does not reset on each swipe.
   var _imageOnly = false;
 
   void _changeView() {
@@ -40,6 +42,7 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
                     "You have no images left. Press this button to return to the previous page."),
               ),
             )
+          // page view to allow swiping between images in a full screen view mode
           : PageView.builder(
               controller: pageController,
               itemCount: images.length,

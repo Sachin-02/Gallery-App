@@ -20,6 +20,9 @@ class _PageListScreenState extends State<PageListScreen> {
   @override
   void initState() {
     super.initState();
+    // Intializing the future inside init state to prevent any unnecessary
+    // reruns of the future when opening and closing the drawer. This can
+    // happen when using the future builder without init state.
     fetchAndSet =
         Provider.of<PersonalPages>(context, listen: false).fetchAndSetPages();
   }
@@ -109,6 +112,7 @@ class _PageListScreenState extends State<PageListScreen> {
                                 gridDelegate:
                                     SliverGridDelegateWithMaxCrossAxisExtent(
                                   maxCrossAxisExtent:
+                                      // Maximum of 2 columns in the grid
                                       MediaQuery.of(context).size.width * 0.5,
                                   childAspectRatio: 1.0,
                                   crossAxisSpacing: 10,
@@ -124,13 +128,16 @@ class _PageListScreenState extends State<PageListScreen> {
                                 ),
                               ),
                             ),
+                            // adding a sized box so the floating action button
+                            // doesn't overlap the page covers when scrolled all
+                            // the way at the bottom
                             SliverList(
                               delegate: SliverChildBuilderDelegate(
                                   (ctx, i) => SizedBox(
                                         height: 70,
                                       ),
                                   childCount: 1),
-                            )
+                            ),
                           ],
                         ),
                       ),
