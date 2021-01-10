@@ -25,6 +25,7 @@ class ImageView extends StatelessWidget {
           child: GestureDetector(
             onTap: changeView,
             child: Container(
+              height: MediaQuery.of(context).size.height,
               width: double.infinity,
               padding: EdgeInsets.all(0),
               child: Hero(
