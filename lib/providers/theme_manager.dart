@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeManager with ChangeNotifier {
   bool _isDarkMode;
+
   final _lightTheme = ThemeData(
     primaryColor: const Color(0xFF3b70b3),
     scaffoldBackgroundColor: const Color(0xFFa4c8f5),
@@ -23,6 +24,7 @@ class ThemeManager with ChangeNotifier {
     ),
     dividerColor: Colors.black,
   );
+
   final _darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: const Color(0xFF2c2f33),
