@@ -1,16 +1,3 @@
-# gallery_app
+This repository contains the code for my gallery app for Android built using Flutter. 
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+I created this app as an end of term project for myself to apply what I had learned about Flutter app development so far. I was also interesting in learning more about using on device features such as the camera as well as storing more complex data such as Image files as opposed to only strings and integers. I also wanted to try and create a more personalized gallery app with more colour than the default on Android phones, the idea being that a user can have different pages containing images for each of the most important people in their life. 
